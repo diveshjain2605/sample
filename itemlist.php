@@ -89,15 +89,15 @@ mysqli_data_seek($records, 0);
                                 <td><?php echo isset($row['id']) ? $row['id'] : 'N/A'; ?></td>
                                 <td><?php echo isset($row['item_name']) ? $row['item_name'] : 'N/A'; ?></td>
                                 <td><?php echo isset($row['qty']) ? $row['qty'] : 'N/A'; ?></td>
-                                <td><?php echo isset($row['mrp']) ? '$'.number_format($row['mrp'], 2) : 'N/A'; ?></td>
-                                <td><?php echo isset($row['total_price']) ? '$'.number_format($row['total_price'], 2) : 'N/A'; ?></td>
+                                <td><?php echo isset($row['mrp']) ? '₹'.number_format($row['mrp'], 2) : 'N/A'; ?></td>
+                                <td><?php echo isset($row['total_price']) ? '₹'.number_format($row['total_price'], 2) : 'N/A'; ?></td>
                             </tr>
                             <?php } ?>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th colspan="4" class="right-align">Total Amount:</th>
-                                <th><?php echo '$'.number_format($totalAmount, 2); ?></th>
+                                <th><?php echo '₹'.number_format($totalAmount, 2); ?></th>
                             </tr>
                         </tfoot>
                     </table>

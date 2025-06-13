@@ -25,6 +25,10 @@
             border-bottom: 1px solid #4CAF50 !important;
             box-shadow: 0 1px 0 0 #4CAF50 !important;
         }
+        /* Indian Rupee Symbol */
+        .rupee-symbol {
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>

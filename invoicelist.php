@@ -79,7 +79,7 @@ $totalPages = ceil($totalRecords / 10);
                                 <td><?php echo isset($row['id']) ? $row['id'] : 'N/A'; ?></td>
                                 <td><?php echo isset($row['customer_name']) ? $row['customer_name'] : 'N/A'; ?></td>
                                 <td><?php echo isset($row['date']) ? $row['date'] : 'N/A'; ?></td>
-                                <td><?php echo isset($row['total_amount']) ? '$'.number_format($row['total_amount'], 2) : 'N/A'; ?></td>
+                                <td><?php echo isset($row['total_amount']) ? '₹'.number_format($row['total_amount'], 2) : 'N/A'; ?></td>
                                 <td>
                                     <a href="itemlist.php?id=<?php echo $row['id']; ?>" class="btn-small waves-effect waves-light blue">
                                         <i class="material-icons">visibility</i>
