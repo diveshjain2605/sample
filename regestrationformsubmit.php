@@ -1,8 +1,7 @@
 <?php
 include('conn.php');
 echo $_POST['fname']."<br>";
-echo $_PO
-ST['lname']."<br>";
+echo $_POST['lname']."<br>";
 echo $_POST['email']."<br>";
 echo $_POST['username']."<br>";
 echo $_POST['password']."<br>";

@@ -44,7 +44,7 @@ th {
                 <td><?php echo  $row['last_name'];?></td>
                 <td><?php echo  $row['email'];?></td>
                 <td><?php echo  $row['user_name'];?></td>
-                <td><?php echo  $row['password'];?></td>
+                <td><?php echo  $row['  '];?></td>
             </tr>
             <?php }
 ?>
