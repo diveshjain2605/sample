@@ -9,6 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <!-- Google Fonts - Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Theme Utilities -->
+    <script src="assets/js/theme-utils.js" defer></script>
     <style>
         :root {
             --primary-dark: #0f0f23;
@@ -226,10 +228,186 @@
             color: var(--accent-light);
         }
 
+        /* Advanced animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Page load animations */
+        .container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .card {
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.2) !important;
+        }
+
+        /* Enhanced button hover effects */
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4) !important;
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Loading states */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--accent-light);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 15px 20px;
+            color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left: 4px solid #4CAF50;
+        }
+
+        .notification.error {
+            border-left: 4px solid #f44336;
+        }
+
+        .notification.warning {
+            border-left: 4px solid #ff9800;
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltip::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid var(--glass-border);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: 115%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--card-bg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tooltip:hover::before,
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* Responsive adjustments */
         @media only screen and (max-width: 992px) {
             nav .brand-logo {
                 font-size: 1.8rem;
+            }
+
+            .notification {
+                right: 10px;
+                left: 10px;
+                transform: translateY(-100px);
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .card {
+                margin: 10px 0;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 5px 0;
             }
         }
     </style>

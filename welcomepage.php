@@ -189,31 +189,140 @@ document.addEventListener('DOMContentLoaded', function() {
         draggable: true
     });
 
-    // Add hover effects to cards
+    // Enhanced hover effects for cards
     const cards = document.querySelectorAll('.card.hoverable');
-    cards.forEach(card => {
+    cards.forEach((card, index) => {
+        // Initial animation
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 200);
+
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+            this.style.boxShadow = '0 15px 40px rgba(108, 92, 231, 0.2)';
             this.style.transition = 'all 0.3s ease';
+
+            // Add glow effect to icon
+            const icon = this.querySelector('.material-icons.large');
+            if (icon) {
+                icon.style.textShadow = '0 0 20px var(--accent-light)';
+                icon.style.transform = 'scale(1.1)';
+            }
         });
 
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '';
+
+            const icon = this.querySelector('.material-icons.large');
+            if (icon) {
+                icon.style.textShadow = '';
+                icon.style.transform = 'scale(1)';
+            }
         });
     });
 
-    // Animate stats on load
+    // Enhanced stats animation with counter effect
     const statNumbers = document.querySelectorAll('.card h4');
+    const statValues = ['25', '142', '18', '₹2.4L']; // Sample values
+
     statNumbers.forEach((stat, index) => {
+        stat.textContent = '0';
+        stat.style.opacity = '0';
+        stat.style.transform = 'scale(0.5)';
+
         setTimeout(() => {
-            stat.style.opacity = '0';
-            stat.style.transform = 'scale(0.5)';
-            setTimeout(() => {
-                stat.style.transition = 'all 0.5s ease';
-                stat.style.opacity = '1';
-                stat.style.transform = 'scale(1)';
-            }, 100);
-        }, index * 200);
+            stat.style.transition = 'all 0.5s ease';
+            stat.style.opacity = '1';
+            stat.style.transform = 'scale(1)';
+
+            // Counter animation
+            if (index < statValues.length) {
+                animateCounter(stat, statValues[index], 1500);
+            }
+        }, 1000 + (index * 300));
     });
+
+    // Counter animation function
+    function animateCounter(element, target, duration) {
+        const isNumber = !isNaN(target);
+        const targetNum = isNumber ? parseInt(target) : parseInt(target.replace(/[^\d]/g, ''));
+        const increment = targetNum / (duration / 50);
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= targetNum) {
+                current = targetNum;
+                clearInterval(timer);
+            }
+
+            if (target.includes('₹')) {
+                element.textContent = '₹' + Math.floor(current / 100000) + '.' + Math.floor((current % 100000) / 10000) + 'L';
+            } else {
+                element.textContent = Math.floor(current).toString();
+            }
+        }, 50);
+    }
+
+    // Add floating animation to welcome header
+    const welcomeCard = document.querySelector('.card[style*="linear-gradient"]');
+    if (welcomeCard) {
+        welcomeCard.style.animation = 'float 6s ease-in-out infinite';
+    }
+
+    // Add particle effect on navigation hover
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            createMiniParticles(this);
+        });
+    });
+
+    function createMiniParticles(element) {
+        for (let i = 0; i < 5; i++) {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: var(--accent-light);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1000;
+                opacity: 0.8;
+            `;
+
+            const rect = element.getBoundingClientRect();
+            particle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+            particle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+
+            document.body.appendChild(particle);
+
+            // Animate particle
+            particle.animate([
+                { transform: 'translateY(0px)', opacity: 0.8 },
+                { transform: 'translateY(-30px)', opacity: 0 }
+            ], {
+                duration: 1000,
+                easing: 'ease-out'
+            }).onfinish = () => particle.remove();
+        }
+    }
+
+    // Add CSS for float animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    `;
+    document.head.appendChild(style);
 });
 </script>
