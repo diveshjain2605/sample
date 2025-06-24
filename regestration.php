@@ -131,11 +131,23 @@ if (isset($_SESSION['user_name'])) {
 
         .input-field label {
             color: var(--text-secondary) !important;
-            font-size: 14px;
+            font-size: 16px !important;
+            position: absolute !important;
+            top: 0.8rem !important;
+            left: 3rem !important;
+            transition: all 0.3s ease !important;
+            transform-origin: 0 0 !important;
+            cursor: text !important;
+            pointer-events: none !important;
         }
 
-        .input-field input:focus + label {
+        .input-field input:focus + label,
+        .input-field input:valid + label,
+        .input-field label.active {
             color: var(--accent-light) !important;
+            font-size: 12px !important;
+            transform: translateY(-1.4rem) !important;
+            top: 0 !important;
         }
 
         .input-field .prefix {
@@ -154,14 +166,20 @@ if (isset($_SESSION['user_name'])) {
             border: none;
             transition: all 0.4s ease;
             font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-transform: none;
             padding: 15px 40px;
-            color: white;
+            color: white !important;
             position: relative;
             overflow: hidden;
             width: 100%;
             margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 50px;
+            font-size: 16px;
         }
 
         .btn-register::before {
@@ -180,8 +198,12 @@ if (isset($_SESSION['user_name'])) {
         }
 
         .btn-register:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 35px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-register:active {
+            transform: translateY(0) scale(1);
         }
 
         .login-link {
@@ -268,7 +290,8 @@ if (isset($_SESSION['user_name'])) {
 
                 <div class="center-align">
                     <button type="submit" class="btn waves-effect waves-light btn-register">
-                        Create Account <i class="material-icons right">person_add</i>
+                        <span>Create Account</span>
+                        <i class="material-icons">person_add</i>
                     </button>
                 </div>
                 <div class="login-link">
@@ -321,6 +344,51 @@ if (isset($_SESSION['user_name'])) {
                     }
                 });
             });
+
+            // Fix floating labels
+            function fixFloatingLabels() {
+                const inputs = document.querySelectorAll('.input-field input');
+                inputs.forEach(input => {
+                    const label = input.nextElementSibling;
+
+                    // Check if input has value on load
+                    if (input.value && input.value.trim() !== '') {
+                        if (label && label.tagName === 'LABEL') {
+                            label.classList.add('active');
+                        }
+                    }
+
+                    // Handle focus events
+                    input.addEventListener('focus', function() {
+                        if (label && label.tagName === 'LABEL') {
+                            label.classList.add('active');
+                        }
+                    });
+
+                    // Handle blur events
+                    input.addEventListener('blur', function() {
+                        if (label && label.tagName === 'LABEL') {
+                            if (!this.value || this.value.trim() === '') {
+                                label.classList.remove('active');
+                            }
+                        }
+                    });
+
+                    // Handle input events
+                    input.addEventListener('input', function() {
+                        if (label && label.tagName === 'LABEL') {
+                            if (this.value && this.value.trim() !== '') {
+                                label.classList.add('active');
+                            } else {
+                                label.classList.remove('active');
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Initialize floating labels
+            fixFloatingLabels();
         });
     </script>
 </body>

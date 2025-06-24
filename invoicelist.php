@@ -89,12 +89,12 @@ if ($countResult) {
                                     <input type="text" name="search" id="search" value="<?php echo htmlspecialchars($search); ?>">
                                     <label for="search">Search by customer name</label>
                                 </div>
-                                <div class="col s12 m4" style="margin-top: 20px;">
-                                    <button type="submit" class="btn waves-effect waves-light" style="margin-right: 10px;">
-                                        <i class="material-icons left">search</i>Search
+                                <div class="col s12 m4" style="margin-top: 20px; display: flex; gap: 10px; align-items: center;">
+                                    <button type="submit" class="btn waves-effect waves-light" style="flex: 1; min-width: 100px;">
+                                        <i class="material-icons left">search</i>SEARCH
                                     </button>
-                                    <a href="invoicelist.php" class="btn-secondary btn waves-effect waves-light">
-                                        <i class="material-icons left">clear</i>Clear
+                                    <a href="invoicelist.php" class="btn-secondary btn waves-effect waves-light" style="flex: 1; min-width: 100px;">
+                                        <i class="material-icons left">clear</i>CLEAR
                                     </a>
                                 </div>
                             </form>
@@ -182,7 +182,7 @@ if ($countResult) {
                     </span>
 
                     <div class="responsive-table-container" style="margin-top: 20px;">
-                        <table class="striped responsive-table highlight">
+                        <table class="responsive-table highlight">
                             <thead>
                                 <tr>
                                     <th><i class="material-icons left tiny">tag</i>Invoice ID</th>
@@ -203,7 +203,7 @@ if ($countResult) {
                                 ?>
                                 <tr class="invoice-row" data-invoice-id="<?php echo $row['id']; ?>">
                                     <td>
-                                        <span class="badge" style="background: var(--accent-light);">
+                                        <span class="badge" style="background: var(--accent-light) !important; color: white !important;">
                                             #<?php echo str_pad($row['id'], 4, '0', STR_PAD_LEFT); ?>
                                         </span>
                                     </td>
@@ -337,11 +337,17 @@ if ($countResult) {
 }
 
 .badge {
-    padding: 4px 8px;
+    padding: 6px 12px;
     border-radius: 12px;
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
+    color: white !important;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: var(--accent-light) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    text-align: center;
 }
 
 .customer-info strong {
@@ -389,6 +395,32 @@ if ($countResult) {
         width: 100%;
         margin: 1px 0;
     }
+}
+
+/* Remove striped background and create consistent row styling */
+table tbody tr {
+    background-color: var(--glass-bg) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+table tbody tr:hover {
+    background-color: rgba(108, 92, 231, 0.1) !important;
+    transform: translateX(5px);
+}
+
+/* Ensure no alternating colors - override any striped styling */
+table.striped tbody tr:nth-child(odd),
+table.striped tbody tr:nth-child(even),
+table tbody tr:nth-child(odd),
+table tbody tr:nth-child(even) {
+    background-color: var(--glass-bg) !important;
+}
+
+table.striped tbody tr:nth-child(odd):hover,
+table.striped tbody tr:nth-child(even):hover,
+table tbody tr:nth-child(odd):hover,
+table tbody tr:nth-child(even):hover {
+    background-color: rgba(108, 92, 231, 0.1) !important;
 }
 </style>
 

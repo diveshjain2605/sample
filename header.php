@@ -666,6 +666,80 @@
                 padding: 8px 10px;
             }
         }
+
+        /* Invoice System Card Action Buttons */
+        .card-action a {
+            box-sizing: border-box !important;
+        }
+
+        .card-action a:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(108, 92, 231, 0.25) !important;
+        }
+
+        .card-action a[style*="background-color: var(--accent-light)"]:hover {
+            background-color: var(--accent-purple) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .card-action a[style*="background-color: transparent"]:hover {
+            background-color: var(--accent-light) !important;
+            color: white !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Ensure equal button heights and alignment */
+        .card-action[style*="align-items: stretch"] a {
+            height: auto !important;
+            min-height: 44px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Search Button Group Styling */
+        .col[style*="display: flex"] button,
+        .col[style*="display: flex"] a {
+            height: 36px !important;
+            line-height: 36px !important;
+            padding: 0 16px !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.5px !important;
+            border-radius: 18px !important;
+            text-align: center !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+
+        .col[style*="display: flex"] .material-icons {
+            font-size: 16px !important;
+        }
+
+        /* Responsive design for card actions */
+        @media (max-width: 600px) {
+            .card-action[style*="display: flex"] {
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+
+            .card-action a {
+                flex: none !important;
+                width: 100% !important;
+            }
+
+            /* Search buttons responsive */
+            .col[style*="display: flex"] {
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+
+            .col[style*="display: flex"] button,
+            .col[style*="display: flex"] a {
+                flex: none !important;
+                width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body>

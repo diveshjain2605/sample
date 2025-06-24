@@ -117,9 +117,13 @@ include('conn.php');
                         </div>
                     </div>
                 </div>
-                <div class="card-action">
-                    <a href="invoice.php"><i class="material-icons left">add</i>Create Invoice</a>
-                    <a href="invoicelist.php"><i class="material-icons left">list</i>View All</a>
+                <div class="card-action" style="display: flex; gap: 12px; padding: 16px 24px; align-items: stretch;">
+                    <a href="invoice.php" class="invoice-btn invoice-btn-primary" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px 16px; border-radius: 6px; background-color: var(--accent-light); color: white !important; text-decoration: none; transition: all 0.3s ease; font-size: 13px; font-weight: 500; min-height: 44px; letter-spacing: 0.5px;">
+                        <i class="material-icons" style="font-size: 16px; margin-right: 6px;">add</i>CREATE INVOICE
+                    </a>
+                    <a href="invoicelist.php" class="invoice-btn invoice-btn-secondary" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px 16px; border-radius: 6px; background-color: transparent; color: var(--accent-light) !important; border: 1px solid var(--accent-light); text-decoration: none; transition: all 0.3s ease; font-size: 13px; font-weight: 500; min-height: 44px; letter-spacing: 0.5px;">
+                        <i class="material-icons" style="font-size: 16px; margin-right: 6px;">list</i>VIEW ALL
+                    </a>
                 </div>
             </div>
         </div>

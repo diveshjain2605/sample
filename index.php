@@ -148,7 +148,8 @@ if (isset($_SESSION['user_name'])) {
 
         .input-field {
             position: relative;
-            margin-bottom: 25px;
+            margin-bottom: 35px;
+            height: 70px;
         }
 
         .input-field input {
@@ -157,9 +158,12 @@ if (isset($_SESSION['user_name'])) {
             color: var(--text-primary);
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px 8px 0 0;
-            padding: 15px 10px 5px 10px !important;
+            padding: 20px 10px 8px 50px !important;
             font-size: 16px;
             transition: all 0.3s ease;
+            width: 100%;
+            height: 50px;
+            margin: 0;
         }
 
         .input-field input:focus {
@@ -179,11 +183,23 @@ if (isset($_SESSION['user_name'])) {
 
         .input-field label {
             color: var(--text-secondary) !important;
-            font-size: 14px;
+            font-size: 16px !important;
+            position: absolute !important;
+            top: 0.8rem !important;
+            left: 3rem !important;
+            transition: all 0.3s ease !important;
+            transform-origin: 0 0 !important;
+            cursor: text !important;
+            pointer-events: none !important;
         }
 
-        .input-field input:focus + label {
+        .input-field input:focus + label,
+        .input-field input:valid + label,
+        .input-field label.active {
             color: var(--accent-light) !important;
+            font-size: 12px !important;
+            transform: translateY(-1.4rem) !important;
+            top: 0 !important;
         }
 
         .input-field .prefix {
@@ -202,14 +218,20 @@ if (isset($_SESSION['user_name'])) {
             border: none;
             transition: all 0.4s ease;
             font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-transform: none;
             padding: 15px 40px;
-            color: white;
+            color: white !important;
             position: relative;
             overflow: hidden;
             width: 100%;
             margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 50px;
+            font-size: 16px;
         }
 
         .btn-login::before {
@@ -524,7 +546,8 @@ if (isset($_SESSION['user_name'])) {
                 </div>
                 <div class="center-align">
                     <button type="submit" class="btn waves-effect waves-light btn-login">
-                        Login <i class="material-icons right">login</i>
+                        <span>Sign In</span>
+                        <i class="material-icons right">arrow_forward</i>
                     </button>
                 </div>
                 <div class="register-link">
@@ -598,12 +621,12 @@ if (isset($_SESSION['user_name'])) {
 
                     if (isValid) {
                         submitBtn.classList.add('loading');
-                        submitBtn.textContent = 'Signing In...';
+                        submitBtn.innerHTML = '<span>Signing In...</span>';
 
-                        // Simulate loading (remove this in production)
-                        setTimeout(() => {
-                            showSuccessAnimation();
-                        }, 1500);
+                        // Allow form to submit normally (remove simulation)
+                        // setTimeout(() => {
+                        //     showSuccessAnimation();
+                        // }, 1500);
                     } else {
                         e.preventDefault();
                     }
@@ -731,9 +754,52 @@ if (isset($_SESSION['user_name'])) {
                 }
             }
 
+            // Fix floating labels
+            function fixFloatingLabels() {
+                const inputs = document.querySelectorAll('.input-field input');
+                inputs.forEach(input => {
+                    const label = input.nextElementSibling;
+
+                    // Check if input has value on load
+                    if (input.value && input.value.trim() !== '') {
+                        if (label && label.tagName === 'LABEL') {
+                            label.classList.add('active');
+                        }
+                    }
+
+                    // Handle focus events
+                    input.addEventListener('focus', function() {
+                        if (label && label.tagName === 'LABEL') {
+                            label.classList.add('active');
+                        }
+                    });
+
+                    // Handle blur events
+                    input.addEventListener('blur', function() {
+                        if (label && label.tagName === 'LABEL') {
+                            if (!this.value || this.value.trim() === '') {
+                                label.classList.remove('active');
+                            }
+                        }
+                    });
+
+                    // Handle input events
+                    input.addEventListener('input', function() {
+                        if (label && label.tagName === 'LABEL') {
+                            if (this.value && this.value.trim() !== '') {
+                                label.classList.add('active');
+                            } else {
+                                label.classList.remove('active');
+                            }
+                        }
+                    });
+                });
+            }
+
             // Initialize everything
             createParticles();
             setupFormValidation();
+            fixFloatingLabels();
 
             // Fix checkbox after a small delay to ensure Materialize is fully loaded
             setTimeout(() => {
