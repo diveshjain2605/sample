@@ -1,44 +1,9 @@
 <?php
 include('session.php');
-if (!(isset($_SESSION['user_name']))) {
-    header('Location: index.php');
-    exit();
-}
 include('header.php');
+include('navigation.php');
+include('conn.php');
 ?>
-
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo"><i class="material-icons left">dashboard</i>Warehouse Pro</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="welcomepage.php"><i class="material-icons left">home</i>Dashboard</a></li>
-            <li><a href="Form.php"><i class="material-icons left">contacts</i>Customers</a></li>
-            <li><a href="invoicelist.php"><i class="material-icons left">receipt_long</i>Invoices</a></li>
-            <li><a href="logout.php"><i class="material-icons left">logout</i>Logout</a></li>
-            <li><a class="dropdown-trigger" href="#" data-target="dropdown1">
-                <i class="material-icons left">account_circle</i><?php echo $_SESSION['user_name']; ?><i class="material-icons right">arrow_drop_down</i>
-            </a></li>
-        </ul>
-        <!-- Mobile menu trigger -->
-        <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
-
-<!-- Mobile Navigation -->
-<ul class="sidenav" id="mobile-nav">
-    <li><div class="user-view">
-        <div class="background" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-light));"></div>
-        <a href="#user"><i class="material-icons circle">account_circle</i></a>
-        <a href="#name"><span class="white-text name"><?php echo $_SESSION['user_name']; ?></span></a>
-    </div></li>
-    <li><a href="welcomepage.php"><i class="material-icons">home</i>Dashboard</a></li>
-    <li><a href="Form.php"><i class="material-icons">contacts</i>Customers</a></li>
-    <li><a href="invoicelist.php"><i class="material-icons">receipt_long</i>Invoices</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="profile.php"><i class="material-icons">person</i>Profile</a></li>
-    <li><a href="change_password.php"><i class="material-icons">lock</i>Change Password</a></li>
-    <li><a href="logout.php"><i class="material-icons">logout</i>Logout</a></li>
-</ul>
 
 <ul id="dropdown1" class="dropdown-content">
     <li><a href="profile.php">Profile</a></li>
@@ -63,6 +28,62 @@ include('header.php');
 </div>
 
 <div class="container">
+    <!-- Database Status Check -->
+    <?php
+    // Quick database health check
+    $db_status = 'healthy';
+    $db_message = '';
+
+    try {
+        // Check if invoice table has required columns
+        $check_invoice = mysqli_query($conn, "SHOW COLUMNS FROM invoice");
+        $invoice_columns = [];
+        if ($check_invoice) {
+            while ($row = mysqli_fetch_assoc($check_invoice)) {
+                $invoice_columns[] = $row['Field'];
+            }
+        }
+
+        if (!in_array('date', $invoice_columns) && !in_array('created_at', $invoice_columns)) {
+            $db_status = 'warning';
+            $db_message = 'Database schema needs updating - missing date columns';
+        }
+
+        // Test a simple query
+        $test_query = mysqli_query($conn, "SELECT COUNT(*) as count FROM invoice");
+        if (!$test_query) {
+            $db_status = 'error';
+            $db_message = 'Database query failed: ' . mysqli_error($conn);
+        }
+    } catch (Exception $e) {
+        $db_status = 'error';
+        $db_message = 'Database connection issue: ' . $e->getMessage();
+    }
+
+    if ($db_status !== 'healthy'): ?>
+    <div class="row">
+        <div class="col s12">
+            <div class="card <?php echo $db_status === 'error' ? 'red lighten-4' : 'orange lighten-4'; ?>">
+                <div class="card-content">
+                    <span class="card-title">
+                        <i class="material-icons left"><?php echo $db_status === 'error' ? 'error' : 'warning'; ?></i>
+                        Database Status: <?php echo ucfirst($db_status); ?>
+                    </span>
+                    <p><?php echo htmlspecialchars($db_message); ?></p>
+                </div>
+                <div class="card-action">
+                    <a href="check_database.php" class="btn waves-effect waves-light blue">
+                        <i class="material-icons left">search</i>Check Database
+                    </a>
+                    <a href="database_schema_fix.php" class="btn waves-effect waves-light orange">
+                        <i class="material-icons left">build</i>Fix Database
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <div class="row">
         <div class="col s12 m6 l4">
             <div class="card hoverable">

@@ -232,26 +232,132 @@ if (isset($_SESSION['user_name'])) {
             box-shadow: 0 15px 35px rgba(108, 92, 231, 0.4);
         }
 
+        /* Remember Me Checkbox - Fixed Single Checkbox */
         .remember-me {
-            margin-top: 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
             color: var(--text-secondary);
-        }
-
-        .remember-me input[type="checkbox"] {
-            opacity: 1 !important;
             position: relative;
-            left: 0;
-            visibility: visible;
+            height: 40px;
+            overflow: hidden;
         }
 
         .remember-me label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
+            display: flex !important;
+            align-items: center !important;
+            cursor: pointer !important;
+            font-size: 14px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            position: relative !important;
+            width: auto !important;
+            height: auto !important;
+        }
+
+        /* Custom checkbox styling - override Materialize completely */
+        .remember-me input[type="checkbox"] {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            opacity: 1 !important;
+            position: relative !important;
+            left: 0 !important;
+            top: 0 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            width: 18px !important;
+            height: 18px !important;
+            margin: 0 12px 0 0 !important;
+            transform: none !important;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 2px solid var(--glass-border) !important;
+            border-radius: 4px !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .remember-me input[type="checkbox"]:checked {
+            background-color: var(--accent-light) !important;
+            border-color: var(--accent-light) !important;
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m13.854 3.646-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6 10.293l7.146-7.147a.5.5 0 0 1 .708.708z'/%3e%3c/svg%3e") !important;
+            background-size: 12px 12px !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+
+        .remember-me input[type="checkbox"]:hover {
+            border-color: var(--accent-light) !important;
+            background-color: rgba(162, 155, 254, 0.1) !important;
+        }
+
+        .remember-me input[type="checkbox"]:focus {
+            border-color: var(--accent-light) !important;
+            box-shadow: 0 0 0 2px rgba(162, 155, 254, 0.2) !important;
+        }
+
+        .remember-me span {
+            color: var(--text-secondary) !important;
+            font-size: 14px !important;
+            line-height: 1.4 !important;
+            user-select: none !important;
+            transition: color 0.3s ease !important;
+            cursor: pointer !important;
         }
 
         .remember-me input[type="checkbox"]:checked + span {
-            color: var(--accent-light);
+            color: var(--accent-light) !important;
+        }
+
+        /* Complete Materialize Checkbox Override */
+        .remember-me [type="checkbox"] + span:not(.lever):before,
+        .remember-me [type="checkbox"] + span:not(.lever):after,
+        .remember-me [type="checkbox"].filled-in + span:not(.lever):before,
+        .remember-me [type="checkbox"].filled-in + span:not(.lever):after {
+            display: none !important;
+            content: none !important;
+        }
+
+        /* Remove all Materialize pseudo-elements */
+        .remember-me *::before,
+        .remember-me *::after {
+            display: none !important;
+        }
+
+        /* Ensure single checkbox display */
+        .remember-me input[type="checkbox"]:not(:first-of-type),
+        .remember-me span:not(:first-of-type) {
+            display: none !important;
+        }
+
+        /* Override any Materialize checkbox classes */
+        .remember-me [type="checkbox"]:not(:checked),
+        .remember-me [type="checkbox"]:checked {
+            position: relative !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            left: 0 !important;
+            visibility: visible !important;
+        }
+
+        /* Force proper span styling */
+        .remember-me [type="checkbox"] + span:not(.lever) {
+            position: relative !important;
+            padding-left: 0 !important;
+            cursor: pointer !important;
+            display: inline-block !important;
+            height: auto !important;
+            line-height: 1.4 !important;
+            font-size: 14px !important;
+            color: var(--text-secondary) !important;
+            user-select: none !important;
+        }
+
+        .remember-me [type="checkbox"]:checked + span:not(.lever) {
+            color: var(--accent-light) !important;
         }
 
         .register-link {
@@ -270,6 +376,40 @@ if (isset($_SESSION['user_name'])) {
         .register-link a:hover {
             color: var(--text-primary);
             text-shadow: 0 0 10px rgba(108, 92, 231, 0.5);
+        }
+
+        .logout-message {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        .logout-message i {
+            font-size: 24px;
+        }
+
+        .logout-message p {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Loading animation */
@@ -358,6 +498,12 @@ if (isset($_SESSION['user_name'])) {
 
     <div class="login-container">
         <div class="glass-card">
+            <?php if(isset($_GET['logout'])): ?>
+                <div class="logout-message">
+                    <i class="material-icons">check_circle</i>
+                    <p>You have been successfully logged out!</p>
+                </div>
+            <?php endif; ?>
             <h4 class="card-title">Welcome Back</h4>
             <form method="post" action="login_check.php" enctype="multipart/form-data">
                 <div class="input-field">
@@ -371,8 +517,8 @@ if (isset($_SESSION['user_name'])) {
                     <label for="password">Password</label>
                 </div>
                 <div class="remember-me">
-                    <label>
-                        <input type="checkbox" name="remember" class="filled-in" />
+                    <label for="remember-checkbox">
+                        <input type="checkbox" name="remember" id="remember-checkbox" />
                         <span>Remember me</span>
                     </label>
                 </div>
@@ -524,9 +670,75 @@ if (isset($_SESSION['user_name'])) {
                 }
             });
 
+            // Fix checkbox duplication and ensure proper functionality
+            function fixCheckboxDuplication() {
+                const rememberContainer = document.querySelector('.remember-me');
+                const rememberCheckbox = document.getElementById('remember-checkbox');
+
+                if (rememberContainer && rememberCheckbox) {
+                    // Remove any duplicate checkboxes that might be created by Materialize
+                    const allCheckboxes = rememberContainer.querySelectorAll('input[type="checkbox"]');
+                    if (allCheckboxes.length > 1) {
+                        for (let i = 1; i < allCheckboxes.length; i++) {
+                            allCheckboxes[i].remove();
+                        }
+                    }
+
+                    // Remove any duplicate spans
+                    const allSpans = rememberContainer.querySelectorAll('span');
+                    if (allSpans.length > 1) {
+                        for (let i = 1; i < allSpans.length; i++) {
+                            allSpans[i].remove();
+                        }
+                    }
+
+                    // Clean up any Materialize-generated elements
+                    const pseudoElements = rememberContainer.querySelectorAll('*:not(label):not(input):not(span)');
+                    pseudoElements.forEach(el => el.remove());
+
+                    // Ensure proper checkbox behavior
+                    rememberCheckbox.addEventListener('change', function() {
+                        const span = this.nextElementSibling;
+                        if (span && span.tagName === 'SPAN') {
+                            if (this.checked) {
+                                span.style.color = 'var(--accent-light)';
+                            } else {
+                                span.style.color = 'var(--text-secondary)';
+                            }
+                        }
+                    });
+
+                    // Make the label clickable
+                    const label = rememberContainer.querySelector('label');
+                    if (label) {
+                        label.addEventListener('click', function(e) {
+                            if (e.target === this || e.target.tagName === 'SPAN') {
+                                rememberCheckbox.checked = !rememberCheckbox.checked;
+                                rememberCheckbox.dispatchEvent(new Event('change'));
+                            }
+                        });
+                    }
+
+                    // Force proper styling
+                    rememberContainer.style.position = 'relative';
+                    rememberContainer.style.overflow = 'hidden';
+                    rememberContainer.style.height = '40px';
+
+                    // Ensure checkbox is visible and properly styled
+                    rememberCheckbox.style.appearance = 'none';
+                    rememberCheckbox.style.webkitAppearance = 'none';
+                    rememberCheckbox.style.mozAppearance = 'none';
+                }
+            }
+
             // Initialize everything
             createParticles();
             setupFormValidation();
+
+            // Fix checkbox after a small delay to ensure Materialize is fully loaded
+            setTimeout(() => {
+                fixCheckboxDuplication();
+            }, 100);
 
             // Add typing effect to title
             const title = document.querySelector('.card-title');

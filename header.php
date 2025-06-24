@@ -9,6 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <!-- Google Fonts - Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- UI Fixes CSS -->
+    <link href="ui_fixes.css" rel="stylesheet">
     <!-- Theme Utilities -->
     <script src="assets/js/theme-utils.js" defer></script>
     <style>
@@ -94,57 +96,146 @@
             text-shadow: 0 0 10px rgba(108, 92, 231, 0.5);
         }
 
-        /* Button Styles */
-        .btn {
+        /* Enhanced Button Styles - FIXED ALIGNMENT AND HOVER */
+        .btn, .btn-large, .btn-small, .btn-floating {
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-light)) !important;
             border-radius: 25px !important;
-            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
-            border: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3) !important;
+            border: none !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            font-weight: 500 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            position: relative !important;
+            overflow: hidden !important;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4) !important;
+        .btn:hover, .btn-large:hover, .btn-small:hover, .btn-floating:hover {
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 12px 35px rgba(108, 92, 231, 0.5) !important;
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-purple)) !important;
+        }
+
+        .btn:active, .btn-large:active, .btn-small:active, .btn-floating:active {
+            transform: translateY(-1px) scale(0.98) !important;
+            transition: all 0.1s ease !important;
         }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1) !important;
-            border: 1px solid var(--glass-border);
+            border: 2px solid var(--glass-border) !important;
+            color: var(--text-primary) !important;
         }
 
-        /* Input Field Styles */
-        .input-field input {
-            background: rgba(255, 255, 255, 0.05);
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-color: var(--accent-light) !important;
+            color: var(--accent-light) !important;
+        }
+
+        /* Button ripple effect */
+        .btn::before, .btn-large::before, .btn-small::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before, .btn-large:active::before, .btn-small:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Enhanced Input Field Styles - FIXED TEXT VISIBILITY */
+        .input-field input,
+        .input-field textarea {
+            background: rgba(255, 255, 255, 0.08) !important;
             border-radius: 8px 8px 0 0;
             padding: 15px 10px 5px 10px !important;
             color: var(--text-primary) !important;
-            border-bottom: 1px solid var(--glass-border) !important;
+            border-bottom: 2px solid var(--glass-border) !important;
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            text-shadow: none !important;
+            -webkit-text-fill-color: var(--text-primary) !important;
+            opacity: 1 !important;
         }
 
-        .input-field input:focus {
+        .input-field input:focus,
+        .input-field textarea:focus {
             border-bottom: 2px solid var(--accent-light) !important;
             box-shadow: 0 1px 0 0 var(--accent-light) !important;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: var(--text-primary) !important;
+            -webkit-text-fill-color: var(--text-primary) !important;
+        }
+
+        .input-field input:valid,
+        .input-field textarea:valid {
+            color: var(--text-primary) !important;
+            -webkit-text-fill-color: var(--text-primary) !important;
+        }
+
+        .input-field input[readonly] {
+            background: rgba(255, 255, 255, 0.03) !important;
+            color: var(--text-secondary) !important;
+            -webkit-text-fill-color: var(--text-secondary) !important;
         }
 
         .input-field label {
             color: var(--text-secondary) !important;
+            font-size: 14px !important;
         }
 
-        .input-field input:focus + label {
+        .input-field input:focus + label,
+        .input-field textarea:focus + label,
+        .input-field label.active {
             color: var(--accent-light) !important;
+            font-size: 12px !important;
         }
 
-        /* Select Styles */
+        /* Fix for placeholder text */
+        .input-field input::placeholder,
+        .input-field textarea::placeholder {
+            color: var(--text-secondary) !important;
+            opacity: 0.7 !important;
+        }
+
+        /* Fix for autofill */
+        .input-field input:-webkit-autofill,
+        .input-field input:-webkit-autofill:hover,
+        .input-field input:-webkit-autofill:focus {
+            -webkit-text-fill-color: var(--text-primary) !important;
+            -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.08) inset !important;
+            transition: background-color 5000s ease-in-out 0s !important;
+        }
+
+        /* Enhanced Select Styles - FIXED DROPDOWN VISIBILITY */
         .select-wrapper input.select-dropdown {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08) !important;
             border-radius: 8px;
             color: var(--text-primary) !important;
-            border-bottom: 1px solid var(--glass-border) !important;
+            border-bottom: 2px solid var(--glass-border) !important;
+            font-size: 16px !important;
+            padding: 15px 10px 5px 10px !important;
+            -webkit-text-fill-color: var(--text-primary) !important;
+        }
+
+        .select-wrapper input.select-dropdown:focus {
+            border-bottom: 2px solid var(--accent-light) !important;
+            background: rgba(255, 255, 255, 0.12) !important;
         }
 
         .dropdown-content {
@@ -152,14 +243,31 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+            z-index: 9999 !important;
         }
 
-        .dropdown-content li > a {
+        .dropdown-content li {
+            min-height: 48px !important;
+        }
+
+        .dropdown-content li > a,
+        .dropdown-content li > span {
             color: var(--text-primary) !important;
+            font-size: 16px !important;
+            padding: 14px 16px !important;
+            display: block !important;
+            line-height: 1.5 !important;
         }
 
-        .dropdown-content li:hover {
+        .dropdown-content li:hover,
+        .dropdown-content li.selected {
             background: var(--glass-bg) !important;
+        }
+
+        .dropdown-content li.selected > span {
+            color: var(--accent-light) !important;
+            font-weight: 500 !important;
         }
 
         /* Table Styles */
@@ -383,7 +491,107 @@
             visibility: visible;
         }
 
-        /* Responsive adjustments */
+        /* Enhanced Layout and Alignment Fixes */
+        .row {
+            margin-bottom: 10px;
+        }
+
+        .row .col {
+            padding: 0 0.75rem;
+        }
+
+        /* Fix for form alignment */
+        .input-field {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .input-field .prefix {
+            position: absolute;
+            width: 3rem;
+            font-size: 2rem;
+            transition: color 0.2s;
+            top: 0.5rem;
+            color: var(--text-secondary) !important;
+        }
+
+        .input-field .prefix.active {
+            color: var(--accent-light) !important;
+        }
+
+        .input-field input[type=text],
+        .input-field input[type=password],
+        .input-field input[type=email],
+        .input-field input[type=url],
+        .input-field input[type=time],
+        .input-field input[type=date],
+        .input-field input[type=datetime],
+        .input-field input[type=datetime-local],
+        .input-field input[type=tel],
+        .input-field input[type=number],
+        .input-field input[type=search],
+        .input-field textarea.materialize-textarea {
+            margin-left: 3rem;
+            width: calc(100% - 3rem);
+        }
+
+        /* Card alignment fixes */
+        .card {
+            margin: 0.5rem 0 1rem 0;
+        }
+
+        .card .card-content {
+            padding: 24px;
+        }
+
+        .card .card-action {
+            padding: 16px 24px;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* Button group alignment */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .center-align .btn-group {
+            justify-content: center;
+        }
+
+        .right-align .btn-group {
+            justify-content: flex-end;
+        }
+
+        /* Table alignment fixes */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 14px;
+        }
+
+        /* Enhanced responsive design */
         @media only screen and (max-width: 992px) {
             nav .brand-logo {
                 font-size: 1.8rem;
@@ -398,6 +606,30 @@
             .notification.show {
                 transform: translateY(0);
             }
+
+            .input-field .prefix {
+                position: relative;
+                width: auto;
+                display: block;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .input-field input[type=text],
+            .input-field input[type=password],
+            .input-field input[type=email],
+            .input-field input[type=url],
+            .input-field input[type=time],
+            .input-field input[type=date],
+            .input-field input[type=datetime],
+            .input-field input[type=datetime-local],
+            .input-field input[type=tel],
+            .input-field input[type=number],
+            .input-field input[type=search],
+            .input-field textarea.materialize-textarea {
+                margin-left: 0;
+                width: 100%;
+            }
         }
 
         @media only screen and (max-width: 600px) {
@@ -405,9 +637,33 @@
                 margin: 10px 0;
             }
 
-            .btn {
+            .btn, .btn-large {
                 width: 100%;
-                margin: 5px 0;
+                margin: 8px 0;
+                justify-content: center;
+            }
+
+            .card .card-action {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-group .btn {
+                width: 100%;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            table th,
+            table td {
+                padding: 8px 10px;
             }
         }
     </style>
